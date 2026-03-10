@@ -12,7 +12,9 @@ A smooth, professional teleprompter web application with butter-smooth scrolling
 - **Progress bar** — Shows how far through the script you are
 
 ### Main Screen 
-![Screenshot](Screenshot 2026-03-10 222522.png)
+
+<img width="1886" height="812" alt="Screenshot 2026-03-10 222522" src="https://github.com/user-attachments/assets/c7c3a061-91de-473b-b444-f9c6efa09f66" />
+
 
 ### Controls
 - **Speed slider** (1–10) with exponential feel — small numbers are slow, big numbers are fast
