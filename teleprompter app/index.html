@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrompterPro — Professional Teleprompter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+  <header class="header">
+    <div class="header__logo">
+      <span class="header__dot"></span>
+      <span class="header__name">PrompterPro</span>
+    </div>
+    <div class="header__actions">
+      <button class="btn-ghost" id="btn-save" title="Save script (Ctrl+S)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save
+      </button>
+      <button class="btn-ghost" id="btn-load" title="Load saved script">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Load
+      </button>
+      <button class="btn-ghost" id="btn-fullscreen" title="Fullscreen (F)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN LAYOUT
+  ═══════════════════════════════════════════ -->
+  <main class="layout">
+
+    <!-- LEFT: Editor Panel -->
+    <aside class="panel panel--editor">
+      <div class="panel__header">
+        <span class="panel__label">SCRIPT EDITOR</span>
+        <button class="btn-clear" id="btn-clear" title="Clear script">Clear</button>
+      </div>
+
+      <textarea
+        id="script-input"
+        class="script-editor"
+        placeholder="Paste or type your script here…
+
+Your text will appear on the teleprompter screen in real time.
+
+Press Space to start scrolling."
+        spellcheck="true"
+      ></textarea>
+
+      <!-- Saved scripts -->
+      <div class="saved-scripts" id="saved-scripts-panel">
+        <div class="panel__label" style="margin-bottom:8px;">SAVED SCRIPTS</div>
+        <div id="saved-list" class="saved-list">
+          <p class="saved-empty">No saved scripts yet.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT: Teleprompter + Controls -->
+    <section class="panel panel--main">
+
+      <!-- Controls bar -->
+      <div class="controls-bar">
+
+        <!-- Speed -->
+        <div class="control-group">
+          <label class="control-label">SPEED</label>
+          <div class="slider-row">
+            <span class="slider-val" id="speed-val">3</span>
+            <input type="range" id="speed-slider" class="slider" min="1" max="10" value="3" step="0.5" />
+          </div>
+        </div>
+
+        <!-- Font size -->
+        <div class="control-group">
+          <label class="control-label">FONT SIZE</label>
+          <div class="slider-row">
+            <span class="slider-val" id="font-val">42</span>
+            <input type="range" id="font-slider" class="slider" min="20" max="100" value="42" step="2" />
+          </div>
+        </div>
+
+        <!-- Align -->
+        <div class="control-group">
+          <label class="control-label">ALIGN</label>
+          <div class="btn-group">
+            <button class="btn-align active" data-align="left"   title="Left">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+            </button>
+            <button class="btn-align" data-align="center" title="Center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="18" y1="18" x2="6" y2="18"/></svg>
+            </button>
+            <button class="btn-align" data-align="right" title="Right">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="7" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="7" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mirror -->
+        <div class="control-group">
+          <label class="control-label">MIRROR</label>
+          <button class="btn-toggle" id="btn-mirror" title="Toggle mirror mode (M)">
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+            <span class="toggle-label" id="mirror-label">OFF</span>
+          </button>
+        </div>
+
+        <!-- Line highlight -->
+        <div class="control-group">
+          <label class="control-label">FOCUS LINE</label>
+          <button class="btn-toggle active" id="btn-focus" title="Toggle focus line">
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+            <span class="toggle-label" id="focus-label">ON</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Teleprompter screen -->
+      <div class="prompter-wrapper" id="prompter-wrapper">
+
+        <!-- Focus line overlay -->
+        <div class="focus-line" id="focus-line"></div>
+
+        <!-- Gradient fades -->
+        <div class="fade fade--top"></div>
+        <div class="fade fade--bottom"></div>
+
+        <!-- Scrolling text -->
+        <div class="prompter-scroll" id="prompter-scroll">
+          <div class="prompter-text" id="prompter-text">
+            <!-- populated by JS -->
+          </div>
+          <!-- padding so last line scrolls fully past focus -->
+          <div class="prompter-spacer"></div>
+        </div>
+
+        <!-- Overlay when paused -->
+        <div class="prompter-overlay" id="prompter-overlay">
+          <div class="overlay-icon">▶</div>
+          <div class="overlay-hint">Press <kbd>Space</kbd> to begin</div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+      </div>
+
+      <!-- Playback controls -->
+      <div class="playback-bar">
+
+        <button class="pb-btn pb-btn--secondary" id="btn-reset" title="Reset (R)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.02"/></svg>
+        </button>
+
+        <button class="pb-btn pb-btn--primary" id="btn-play" title="Play/Pause (Space)">
+          <svg class="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg class="icon-pause hidden" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+
+        <button class="pb-btn pb-btn--secondary" id="btn-fullscreen2" title="Fullscreen (F)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        </button>
+
+      </div>
+
+      <!-- Keyboard shortcuts hint -->
+      <div class="shortcuts-bar">
+        <span><kbd>Space</kbd> Play/Pause</span>
+        <span><kbd>↑↓</kbd> Speed</span>
+        <span><kbd>←→</kbd> Scroll</span>
+        <span><kbd>R</kbd> Reset</span>
+        <span><kbd>M</kbd> Mirror</span>
+        <span><kbd>F</kbd> Fullscreen</span>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FULLSCREEN MODE (separate overlay)
+  ═══════════════════════════════════════════ -->
+  <div class="fullscreen-mode" id="fullscreen-mode">
+    <div class="fs-controls" id="fs-controls">
+      <button class="fs-btn" id="fs-play" title="Play/Pause (Space)">
+        <svg class="icon-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <svg class="icon-pause hidden" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </button>
+      <div class="fs-speed">
+        <span id="fs-speed-val">3</span>
+        <input type="range" id="fs-speed" class="slider slider--sm" min="1" max="10" value="3" step="0.5" />
+      </div>
+      <button class="fs-btn" id="fs-reset" title="Reset">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.02"/></svg>
+      </button>
+      <button class="fs-btn" id="fs-exit" title="Exit fullscreen (Esc)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg>
+      </button>
+    </div>
+    <div class="fs-focus-line" id="fs-focus-line"></div>
+    <div class="fade fade--top"></div>
+    <div class="fade fade--bottom"></div>
+    <div class="fs-scroll" id="fs-scroll">
+      <div class="prompter-text" id="fs-text"></div>
+      <div class="prompter-spacer"></div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="fs-progress"></div>
+    </div>
+  </div>
+
+  <!-- Save modal -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" id="save-modal">
+      <div class="modal__title">Save Script</div>
+      <input type="text" id="save-name" class="modal__input" placeholder="Script name…" />
+      <div class="modal__actions">
+        <button class="btn-ghost" id="modal-cancel">Cancel</button>
+        <button class="btn-primary" id="modal-confirm">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
