@@ -11,6 +11,9 @@ A smooth, professional teleprompter web application with butter-smooth scrolling
 - **Pause overlay** — Pulsing play icon when paused for visual feedback
 - **Progress bar** — Shows how far through the script you are
 
+### Main Screen 
+![Screenshot](Screenshot 2026-03-10 222522.png)
+
 ### Controls
 - **Speed slider** (1–10) with exponential feel — small numbers are slow, big numbers are fast
 - **Font size slider** (20–100px) for comfortable reading distances
