@@ -10,6 +10,8 @@ A smooth, professional teleprompter web application with butter-smooth scrolling
 - **Focus line** — Glowing cyan line across the middle showing your reading position
 - **Pause overlay** — Pulsing play icon when paused for visual feedback
 - **Progress bar** — Shows how far through the script you are
+### Link 
+https://prompterpro.netlify.app/ 
 
 ### Main Screen 
 
